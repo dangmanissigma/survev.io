@@ -144,9 +144,6 @@ export class ConfigManager {
                 data = JSON.parse(strConfig);
             } catch (_e) {}
             this.config = util.mergeDeep({}, defaultConfig, data);
-            if (import.meta.env.DEV) {
-                this.config.gameModeIdx = 0;
-            }
             this.checkUpgradeConfig();
             this.onModified();
             this.loaded = true;
