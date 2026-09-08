@@ -11,9 +11,6 @@ export const aimbotTest = util.mergeDeep(
     {},
     Main,
     {
-        assets: {
-            atlases: ["loadout", "shared", "main", "woods"],
-        },
         mapGen: {
             map: {
                 // Small flat arena — big enough to strafe around
