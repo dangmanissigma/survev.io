@@ -106,7 +106,7 @@ const defaultConfig = {
     profile: null as { slug: string } | null,
     playerName: "",
     region: "na",
-    gameModeIdx: 2,
+    gameModeIdx: 3,
     teamAutoFill: true,
     language: "en" as Locale,
     prerollGamesPlayed: 0,
