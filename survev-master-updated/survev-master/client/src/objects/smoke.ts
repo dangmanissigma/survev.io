@@ -145,7 +145,7 @@ export class SmokeBarn {
                 p.fadeTicker += p.fade ? dt : 0;
                 p.active = p.fadeTicker < p.fadeDuration;
 
-                const alpha = math.clamp(1 - p.fadeTicker / p.fadeDuration, 0, 1) * 0.9;
+                const alpha = math.clamp(1 - p.fadeTicker / p.fadeDuration, 0, 1) * 0.22;
 
                 // Always add to the top layer if visible and not occluded by
                 // the layer mask (fixes issue of smokes spawning on the ground
