@@ -159,6 +159,8 @@ export class Game {
         this.updateData();
     }
 
+    onHumanPlayerJoined() {}
+
     update(dt?: number) {
         if (this.stopped) return;
         this.profiler.flush();

@@ -227,6 +227,10 @@ export class PlayerBarn {
 
         this.game.logger.info(`Player ${player.name} joined`);
 
+        if (!player.bot) {
+            this.game.onHumanPlayerJoined();
+        }
+
         this.newPlayers.push(player);
         this.game.objectRegister.register(player);
         this.players.push(player);

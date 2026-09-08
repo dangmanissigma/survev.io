@@ -30,13 +30,13 @@ export function getConfig(isProduction: boolean, dir: string) {
         },
         regions: {},
         proxies: {},
-        modes: [
-            { mapName: "main", teamMode: TeamMode.Solo, enabled: true },
-            { mapName: "main", teamMode: TeamMode.Duo, enabled: true },
-            { mapName: "main", teamMode: TeamMode.Squad, enabled: true },
-            // Dev-only: empty flat arena for aimbot/testing bots (see server/src/aimbotTestBot.ts)
-            { mapName: "aimbot_test", teamMode: TeamMode.Solo, enabled: isDev },
-        ],
+        modes: isDev
+            ? [{ mapName: "aimbot_test", teamMode: TeamMode.Solo, enabled: true }]
+            : [
+                { mapName: "main", teamMode: TeamMode.Solo, enabled: true },
+                { mapName: "main", teamMode: TeamMode.Duo, enabled: true },
+                { mapName: "main", teamMode: TeamMode.Squad, enabled: true },
+            ],
         clientTheme: "main",
         passType: "pass_survivr1",
         gameTps: 100,

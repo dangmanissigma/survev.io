@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import { platform } from "node:os";
 import path from "node:path";
+import { spawn, type ChildProcess } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { App, SSLApp, type WebSocket } from "uWebSockets.js";
 import type { GameWsDisconnectReason } from "../../../shared/types/api.ts";
 import { Logger } from "../../../shared/utils/logger.ts";
@@ -119,6 +121,43 @@ async function sendQuestProgress(userId: string, progress: Array<{ id: string; d
  * Implements methods only used when the game is actually running on a server
  */
 class ServerGame extends Game {
+    private botSpawnTimer: ReturnType<typeof setTimeout> | undefined;
+    private botsSpawned = false;
+
+    override onHumanPlayerJoined() {
+        if (
+            !Config.debug.allowBots
+            || this.mapName !== "aimbot_test"
+            || this.botsSpawned
+            || this.botSpawnTimer
+        ) {
+            return;
+        }
+
+        this.botSpawnTimer = setTimeout(() => {
+            this.botSpawnTimer = undefined;
+
+            if (
+                this.stopped
+                || !this.playerBarn.players.some((player) => !player.bot && !player.disconnected)
+            ) {
+                return;
+            }
+
+            this.botsSpawned = true;
+            const botFile = fileURLToPath(new URL("../aimbotTestBot.ts", import.meta.url));
+            for (let i = 0; i < 3; i++) {
+                const bot: ChildProcess = spawn(
+                    process.execPath,
+                    ["--import", "tsx", botFile],
+                    { stdio: "inherit" },
+                );
+                bot.on("error", (err) => this.logger.error("Failed to start test bot", err));
+            }
+            this.logger.info("Spawned 3 test bots after human player joined");
+        }, 30000);
+    }
+
     override updateData() {
         sendMsg({
             type: ProcessMsgType.UpdateData,
