@@ -51,14 +51,7 @@ class DummyBot {
     constructor(match: FindGameMatchData) {
         // NOTE: upstream now returns full connection URLs directly (res.urls),
         // instead of an addr you had to build a /play?gameId=... path from.
-        const returnedUrl = match.urls[0];
-        const wsUrl = returnedUrl.startsWith("/")
-            ? (() => {
-                const localUrl = new URL(returnedUrl, "http://localhost");
-                const port = localUrl.searchParams.get("port");
-                return `ws://localhost:${port ?? "80"}${localUrl.pathname}`;
-            })()
-            : returnedUrl.replace(/^http/, "ws");
+        const wsUrl = match.urls[0];
         this.joinToken = match.joinToken;
 
         console.log("[DummyBot] connecting to", wsUrl);
