@@ -6,7 +6,7 @@ import { v2 } from "../../shared/utils/v2.ts";
 // ── CONFIG ────────────────────────────────────────────────────
 const SERVER = "localhost:8000"; // your dev API server (see server/src/config.ts -> apiServerUrl)
 const USE_HTTPS = false;
-const MAP_MODE = 0; // gameModeIdx — the only mode in local development
+const MAP_MODE = 3; // gameModeIdx — index of the "aimbot_test" entry in config.ts `modes` array
 const SWAP_EVERY = 2.0; // seconds between left↔right switch
 const TICK_MS = 33; // input send rate (~30hz)
 // ─────────────────────────────────────────────────────────────
